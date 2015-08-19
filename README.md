@@ -8,6 +8,9 @@ Following is the outcome of this project.
 1) Sessionize the web log by IP. Sessionize = aggregrate all page hits by visitor/IP during a fixed time window. 
 
 Output is uploaded to /outcome1
+Format of output1 is
+
+(sessionId, ipAddress), (lowestStartTime, maximumEndTime)
 
 2) Determine the average session time
 
