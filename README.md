@@ -13,6 +13,8 @@ Output is uploaded to /outcome1
 
 Output is uploaded to /outcome2
 
+Format of the output2 is (Labeled Session ID, total duration in milliseconds spend within the session) - handling the average at the end of the program.
+
 ====================
 Pending items
 ====================
