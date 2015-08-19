@@ -1,22 +1,30 @@
-import java.text.SimpleDateFormat
 
-import org.apache.spark.{AccumulatorParam, SparkConf, SparkContext}
+import com.websessionization.sparkutil.LongAccumulatorParam
+import org.apache.spark.streaming.dstream.DStream
+import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.{AccumulatorParam, rdd, SparkContext, SparkConf}
+import java.text.SimpleDateFormat
+import com.websessionization.config.SessionConfig
+import scala.collection.immutable.HashMap
+import java.util.Date
+
+import scala.collection.Seq
 
 /**
  * Created by hardik on 16/08/15.
  */
 object WeblogChallange extends App {
 
-  val SESSION_TIMEOUT = 900000
-  val INPUT_FILE_PATH="/home/hardik/Downloads/WeblogChallenge-master/data/2015_07_22_mktplace_shop_web_log_sample.log.gz"
+
+  val sessionConfig = SessionConfig.config.getConfig("config")
+  val SESSION_TIMEOUT=sessionConfig.getLong("sessionTimeOut")
+  val INPUT_FILE_PATH= sessionConfig.getString("inputFilePath")
   val ACCESS_LOG_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 
   val sparkConf = new SparkConf().setAppName("WebLogChallange ").setMaster("local[2]")
 
   //Initialize Spark Context.
   val sc = new SparkContext(sparkConf)
-
-
 
   val logFileLines =  sc.textFile(INPUT_FILE_PATH)
 
@@ -46,7 +54,6 @@ object WeblogChallange extends App {
     (ipAddress,(time,time))
 
   })
-
   //Sort IP by timestamp value and pick the earliest time as our sessionStartTime
 
   val ipSortedByTimeStamp = ipKeyLines.sortBy(_._2)
@@ -87,6 +94,8 @@ object WeblogChallange extends App {
       Math.max(a._2, b._2),Math.max(a._2, b._2)-Math.min(a._1, b._1))
 
   })
+  //Write output to file system
+  // sessionData.saveAsTextFile("path")
 
   // 2. Average session duration = total duration of all sessions (in seconds) / number of sessions.
   //Calculate total session duration within  each session window
@@ -99,6 +108,8 @@ object WeblogChallange extends App {
     ((a+b))
   })
 
+  //Write output to file system
+  durationData.saveAsTextFile("/home/hardik/Desktop/totalDurationWithinSession")
 
   val totalSessions:Long = durationData.count()
 
@@ -113,21 +124,5 @@ object WeblogChallange extends App {
 
   val averageSessionTime = durationInSeconds/totalSessions
 
-  /** *
-    * Custom Accumulator: Long Type AccumulatorParam,
-    * Spark By Default creates only for Init type.
-    *
-    */
-  object LongAccumulatorParam extends AccumulatorParam[Long] {
-
-    override def addInPlace(r1: Long, r2: Long): Long = {
-      r1+r2
-    }
-
-    override def zero(initialValue: Long): Long = {
-      0L
-    }
-
-  }
 
 }

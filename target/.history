@@ -1,0 +1,43 @@
+clean
+compile
+run-main WeblogChallange
+clean
+compile
+run-main WeblogChallange
+clean
+compile
+run-main WeblogChallange
+exit
+clean
+compile
+run-main WeblogChallange
+clean
+compile
+run-main WeblogChallange
+clean
+exit
+compile
+run-main WeblogChallange
+update
+compile
+run-main WeblogChallange
+exit
+reload
+clean
+compile
+run-main WeblogChallange
+clean
+compile
+run-main WeblogChallange
+exit
+run-main WeblogChallange
+clean
+compile
+run-main WeblogChallange
+clean
+compile
+run-main WeblogChallange
+clean
+compile
+run-main WeblogChallange
+exit
