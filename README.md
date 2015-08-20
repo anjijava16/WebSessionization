@@ -14,20 +14,28 @@ Format of output1 is
 
 2) Determine the average session time
 
-Output is uploaded to /output2
+Output is uploaded to /output2 
 
 Format of the output2 is (Labeled Session ID, total duration in milliseconds spend within the session) - handling the average at the end of the program.
+
+Also, supplying staging data in stageData folder used for computing sessionDuration for every IP in that session window.
+
+Format of stageData
+
+((sessionID, ipAddress), (lowestStartTime, maximumEndTime, sessionDuration)
 
 3) Determine unique URL visits per session. To clarify, count a hit to a unique URL only once per session.
 
 Output is uploaded to /output3
 Format (sessionID, uniqueURL)
 
+4) Find the most engaged users, ie the IPs with the longest session times
+Output is uploaded to /output4
+Format (ipAddress, sumOfAllSessionsDuration) - most engaged user will be at the end of the file.
 ====================
 Pending items
 ====================
 
-4) Find the most engaged users, ie the IPs with the longest session times
 
 ====================
  Building
