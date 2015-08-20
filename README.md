@@ -31,10 +31,8 @@ Format (sessionID, uniqueURL)
 
 4) Find the most engaged users, ie the IPs with the longest session times
 Output is uploaded to /output4
+
 Format (ipAddress, sumOfAllSessionsDuration) - most engaged user will be at the end of the file.
-====================
-Pending items
-====================
 
 
 ====================
